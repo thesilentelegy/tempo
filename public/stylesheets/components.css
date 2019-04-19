@@ -119,10 +119,24 @@
 .routine-card {
   flex: 1 0 22em;
   margin-right: 1em;
-  background: linear-gradient(118.53deg, #EB3453 0%, #FBA919 100%);
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
   padding: 1.5rem 1em;
+}
+.grad-sun {
+  background: linear-gradient(118.53deg, #EB3453 0%, #FBA919 100%);
+}
+.grad-frost {
+  background: linear-gradient(118.53deg, #202bd7 0%, #a61c95 100%);
+}
+.grad-night {
+  background: linear-gradient(118.53deg, #b721ff 0%, #21d4fd 100%);
+}
+.grad-mint {
+  background: linear-gradient(118.53deg, #2af598 0%, #08aeea 100%);
+}
+.grad-warm {
+  background: linear-gradient(118.53deg, #ff2525 0%, #ffe53b 100%);
 }
 .routine-control {
   width: 100%;
