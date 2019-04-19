@@ -7,6 +7,8 @@
   border-right: 1px solid #dedede;
 }
 
+/* BRAND */
+
 .brand {
   display: inline-flex;
   flex-flow: row nowrap;
@@ -23,6 +25,8 @@
   font-size: 1.5em;
   color: #242424;
 }
+
+/* TAB NAV */
 
 .tab-list {
   width: 100%;
@@ -57,7 +61,7 @@
 }
 
 
-/* VIEW PANEL */
+/* HIGH-LEVEL CONTAINER */
 
 .view-panel {
   flex: 4 1 80%;
@@ -68,6 +72,8 @@
   height: 85%;
   display: flex;
 }
+
+/* TOP BAR */
 
 .top-bar {
   height: 15%;
@@ -102,6 +108,8 @@
   text-align: right;
 }
 
+/* SUBHEADER */
+
 .subheader {
   display: flex;
   margin: 0 0 1rem 0;
@@ -116,6 +124,8 @@
 .home-panel > .content-wrapper {
   flex-flow: row nowrap;
 }
+
+/* TODAY ACTIVITY PANEL */
 
 .today-activity {
   flex: 3 0 0;
@@ -138,6 +148,8 @@
   border-radius: 1em;
 }
 
+/* PROGRESS TRACKER */
+
 .progress-tracker {
   display: inline-flex;
   justify-content: center;
@@ -155,6 +167,8 @@
   text-align: center;
 }
 
+/* TASK INFO */
+
 .task-info {
   display: flex;
   flex-flow: column nowrap;
@@ -166,6 +180,8 @@
   font-size: 1.5em;
   color: #ffffff;
 }
+
+/* TASK DURATION */
 
 .task-info__duration {
   margin-top: 3em;
@@ -179,6 +195,8 @@
   font-weight: 500;
   font-size: 0.5em;
 }
+
+/* BADGE */
 
 .badge {
   display: inline-block;
@@ -194,6 +212,8 @@
 .subheader > .badge {
   margin: 0 0 0 0.5rem;
 }
+
+/* COMPLETED TASK */
 
 .completed-today {
   display: flex;
@@ -238,6 +258,8 @@
   margin: 0;
 }
 
+/* ROUTINE MANAGER PANEL */
+
 .routine-manager {
   flex: 5 0 0;
   height: 100%;
@@ -252,6 +274,9 @@
 .routine-list__item {
   margin-right: 1rem;
 }
+
+/* ROUTINE CARD */
+
 .routine-card {
   width: 22rem;
   background: linear-gradient(118.53deg, #EB3453 0%, #FBA919 100%);
