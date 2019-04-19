@@ -104,7 +104,7 @@ const CompletedTask = {
 const CompletedTasksList = {
   template: `
   <div class="completed-tasks">
-    <h2 class="subheader">Tasks you completed <Badge count="14"></Badge></h2>
+    <h2 class="subheader">Tasks you completed <Badge :count="completedTasks.length"></Badge></h2>
     <ul class="completed-tasks-list">
       <CompletedTask v-for="completedTask in completedTasks" :info="completedTask" :key="completedTask.id"></CompletedTask>
     </ul>
@@ -128,7 +128,7 @@ const CompletedTasksList = {
 const RoutineCard = {
   props: ['info'],
   template: `
-  <li class="routine-card">
+  <li class="routine-card" :class="'grad-' + info.theme">
     <div class="routine-control">
       <h3 class="routine-name trunc">{{info.routineName}}</h3>
       <button type="button" class="routine-select" :class="{selected: info.isSelected}" v-if="info.isSelectable"></button>
@@ -146,10 +146,16 @@ const RoutineCarousel = {
   <div class="routine-carousel">
     <div class="carousel-control">
       <h2 class="subheader">Routines <Badge :count="routines.length"></Badge></h2>
+      <div class="carousel-control__buttons">
+        <button type="button" class="carousel__button" @click="scrollLeft"><i class="icon-arrow-left"></i></button>
+        <button type="button" class="carousel__button" @click="scrollRight"><i class="icon-arrow-right"></i></button>
+      </div>
     </div>
-    <ul class="routine-list">
-      <RoutineCard v-for="routine in routines" :info="routine" :key="routine.id"></RoutineCard>
-    </ul>
+    <div class="carousel-wrapper">
+      <ul class="routine-list">
+        <RoutineCard v-for="routine in routines" :info="routine" :key="routine.id"></RoutineCard>
+      </ul> 
+    </div>
   </div>`,
   data: function() {
     return {
@@ -157,15 +163,65 @@ const RoutineCarousel = {
         {
           id: 0,
           routineName: 'Weekend Stuff', isSelectable: false, isDeletable: true, isSelected: false, 
-          tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap']
+          tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap'],
+          theme: 'sun'
         },
         {
           id: 1,
+          routineName: 'Exercise', isSelectable: false, isDeletable: true, isSelected: false, 
+          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
+          theme: 'frost'
+        },
+        {
+          id: 2,
           routineName: 'Weekend Stuff', isSelectable: false, isDeletable: true, isSelected: false, 
-          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower']
+          tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap'],
+          theme: 'night'
+        },
+        {
+          id: 3,
+          routineName: 'Exercise', isSelectable: false, isDeletable: true, isSelected: false, 
+          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
+          theme: 'mint'
+        },
+        {
+          id: 4,
+          routineName: 'Exercise', isSelectable: false, isDeletable: true, isSelected: false, 
+          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
+          theme: 'warm'
         }
       ]
     } 
+  },
+  computed: {
+    carouselData: function() {
+      const carouselNode = document.querySelector(".routine-list");
+      const cardNode = carouselNode.querySelector(".routine-card");
+      let cardWidth = cardNode.offsetWidth;
+      let cardStyle = cardNode.currentStyle || window.getComputedStyle(cardNode);
+      let cardMarginRight = Number(cardStyle.marginRight.match(/\d+/g)[0]);
+      let cardCount = carouselNode.querySelectorAll(".routine-card").length;
+      let offset = 0;
+      let maxX = -((cardWidth + cardMarginRight) * (cardCount - 1));
+      return {
+        carouselNode: carouselNode, cardNode: cardNode, cardWidth: cardWidth, cardStyle: cardStyle, cardMarginRight: cardMarginRight, 
+        cardCount: cardCount, offset: offset, maxX: maxX
+      }
+    }
+  },
+  methods: {
+    scrollLeft: function() {
+      if (this.carouselData.offset !== 0) {
+        this.carouselData.offset += this.carouselData.cardWidth + this.carouselData.cardMarginRight;
+        this.carouselData.carouselNode.style.transform = `translateX(${this.carouselData.offset}px)`;
+      }
+    },
+    scrollRight: function() {
+      if (this.carouselData.offset !== this.carouselData.maxX) {
+        this.carouselData.offset -= this.carouselData.cardWidth + this.carouselData.cardMarginRight;
+        this.carouselData.carouselNode.style.transform = `translateX(${this.carouselData.offset}px)`;
+      }
+    }
   },
   components: {
     'Badge': Badge,

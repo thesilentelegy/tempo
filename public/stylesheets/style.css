@@ -162,14 +162,37 @@
   display: flex;
   flex-flow: column nowrap;
 }
+.carousel-control {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.carousel-control__buttons {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.carousel__button {
+  flex: 1 0 0;
+  border: none;
+  background-color: transparent;
+}
+.carousel-wrapper {
+  position: relative;
+  flex: 1 0 auto;
+  overflow-x: hidden;
+}
 .routine-list {
   display: flex;
   flex-flow: row nowrap;
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow-x: hidden;
+  position: absolute;
+  left: 0;
   list-style-type: none;
+  transition: all 1s ease;
 }
 .routine-list__item {
   margin-right: 1rem;
