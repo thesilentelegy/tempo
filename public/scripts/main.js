@@ -121,12 +121,7 @@ const RoutineCard = {
       <button type="button" class="routine-delete" v-if="isDeletable"><i class="icon-delete"></i></button>
     </div>
     <ul class="routine-tasks">
-      <li class="routine-tasks__item">Shower</li>
-      <li class="routine-tasks__item">Clean room</li>
-      <li class="routine-tasks__item">Play</li>
-      <li class="routine-tasks__item">Study</li>
-      <li class="routine-tasks__item">Walk</li>
-      <li class="routine-tasks__item">Nap</li>
+      <li v-for="task in tasks" class="routine-tasks__item">{{task}}</li>
     </div>
   </ul>
   `,
@@ -135,6 +130,7 @@ const RoutineCard = {
       isSelectable: false,
       isDeletable: true,
       isSelected: false,
+      tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap']
     }
   }
 }
@@ -148,6 +144,8 @@ const RoutineCarousel = {
     <ul class="routine-list">
       <li class="routine-list__item">
         <RoutineCard></RoutineCard>
+      </li>
+      <li class="routine-list__item">
         <RoutineCard></RoutineCard>
       </li> 
     </ul>
