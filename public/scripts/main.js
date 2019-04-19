@@ -68,7 +68,7 @@ const CurrentTask = {
   template: `
   <div class="current-task">
     <span class="progress-tracker">
-      <span class="progress-tracker__text trunc">You're on track</span>
+      <span class="progress-tracker__text">You're on track</span>
     </span>
     <div class="task-info">
       <h3 class="task-info__name">Study</h3>
@@ -82,34 +82,47 @@ const CurrentTask = {
   `
 };
 
-const CompletedTasksList = {
-  template: `
-  <ul class="completed-today">
-    <li class="completed-task" v-for="completedTask in completedToday">
-      <div class="progress-indicator" :class="completedTask.progress == 0 ? 'on-time' : completedTask.progress == -1 ? 'early' : 'late'"></div>
-      <h3 class="completed-task__name trunc">{{ completedTask.name }}</h3>
-      <p class="completed-task__duration">
-        <span class="duration" v-if="completedTask.h > 0">{{completedTask.h}}<span>h</span></span> 
-        <span class="duration" v-if="completedTask.m > 0">{{completedTask.m}}<span>m</span></span>
-        <span class="duration">{{completedTask.s}}<span>s</span></span>
-      </p>
-    </li>
-  </ul>`,
-  data: function() {
-    return {
-      completedToday: [
-        { name: 'Shower', progress: 0, h: 0, m: 30, s: 23 },
-        { name: 'Clean room', progress: -1, h: 0, m: 26, s: 55 },
-        { name: 'Play', progress: 1, h: 1, m: 12, s: 19 },
-        { name: 'Nap', progress: 0, h: 0, m: 20, s: 32}
-      ]
-    }
-  }
-};
-
 const Badge = {
   props: ['count'],
   template: `<span class="badge">{{ count }}</span>`
+};
+
+const CompletedTask = {
+  props: ['info'],
+  template: `
+  <li class="completed-tasks-list__item">
+    <div class="progress-indicator" :class="info.progress == 0 ? 'on-time' : info.progress == -1 ? 'early' : 'late'"></div>
+    <h3 class="completed-task__name trunc">{{ info.name }}</h3>
+    <p class="completed-task__duration">
+      <span class="duration" v-if="info.h > 0">{{info.h}}<span>h</span></span> 
+      <span class="duration" v-if="info.m > 0">{{info.m}}<span>m</span></span>
+      <span class="duration">{{info.s}}<span>s</span></span>
+    </p>
+  </li>`
+};
+
+const CompletedTasksList = {
+  template: `
+  <div class="completed-tasks">
+    <h2 class="subheader">Tasks you completed <Badge count="14"></Badge></h2>
+    <ul class="completed-tasks-list">
+      <CompletedTask v-for="completedTask in completedTasks" :info="completedTask" :key="completedTask.id"></CompletedTask>
+    </ul>
+  </div>`,
+  data: function() {
+    return {
+      completedTasks: [
+        { id: 0, name: 'Shower', progress: 0, h: 0, m: 30, s: 23 },
+        { id: 1, name: 'Clean room', progress: -1, h: 0, m: 26, s: 55 },
+        { id: 2, name: 'Play', progress: 1, h: 1, m: 12, s: 19 },
+        { id: 3, name: 'Nap', progress: 0, h: 0, m: 20, s: 32}
+      ]
+    }
+  },
+  components: {
+    'Badge': Badge,
+    'CompletedTask': CompletedTask
+  }
 };
 
 const RoutineCard = {
@@ -132,7 +145,7 @@ const RoutineCarousel = {
   template: `
   <div class="routine-carousel">
     <div class="carousel-control">
-      <h2 class="subheader">Routines <Badge count="5"></Badge></h2>
+      <h2 class="subheader">Routines <Badge :count="routines.length"></Badge></h2>
     </div>
     <ul class="routine-list">
       <RoutineCard v-for="routine in routines" :info="routine" :key="routine.id"></RoutineCard>
@@ -168,7 +181,6 @@ const Home = {
       <div class="today-activity">
         <h2 class="subheader">Doing now...</h2>
         <CurrentTask></CurrentTask>
-        <h2 class="subheader">Tasks you completed <Badge count="14"></Badge></h2>
         <CompletedTasksList></CompletedTasksList>
       </div>
       <div class="routine-manager">

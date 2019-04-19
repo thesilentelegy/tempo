@@ -118,6 +118,7 @@
 
 .routine-card {
   flex: 1 0 22em;
+  margin-right: 1em;
   background: linear-gradient(118.53deg, #EB3453 0%, #FBA919 100%);
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
