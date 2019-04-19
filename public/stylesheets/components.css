@@ -1,0 +1,151 @@
+/* NAV DRAWER */
+
+.nav-drawer {
+  flex: 1 1 20%;
+  padding-top: 1rem;
+  padding-left: 1.5rem;
+  border-right: 1px solid #dedede;
+}
+
+/* BADGE */
+
+.badge {
+  display: inline-block;
+  width: 2.5em;
+  padding: 0.25em 0.5em;
+  background-color: #ff4c00;
+  border-radius: 10em;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* TAB NAV */
+
+.tab-list {
+  width: 100%;
+  margin: 4em 0 0 0;
+  padding: 0;
+  display: flex;
+  flex-flow: column nowrap;
+  list-style-type: none;
+}
+.tab-button {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 100%;
+  padding: 0.5em 0;
+  font-weight: 400;
+  color: #242424;
+  text-decoration: none;
+}
+.tab-button:hover {
+  color: #fba919;
+}
+.tab-button__icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 2em;
+  fill: red;
+}
+
+/* SUBHEADER */
+
+.subheader {
+  display: flex;
+  margin: 0 0 1rem 0;
+  font-weight: 500;
+  font-size: 1.5em;
+  color: #242424;
+  align-items: center;
+}
+
+/* DURATION */
+
+.duration {
+  font-weight: 300;
+  font-size: 2em;
+}
+.duration > span {
+  font-weight: 500;
+  font-size: 0.5em;
+}
+
+/* PROGRESS TRACKER */
+
+.progress-tracker {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 8.5em;
+  height: 8.5em;
+  padding: 1em;
+  border: 8px solid #ffffff;
+  border-radius: 100%;
+}
+.progress-tracker__text {
+  font-weight: 400;
+  font-size: 1em;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* ROUTINE CARD */
+
+.routine-card {
+  width: 22rem;
+  background: linear-gradient(118.53deg, #EB3453 0%, #FBA919 100%);
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+  padding: 1.5rem 1em;
+}
+.routine-control {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.routine-name {
+  margin: 0;
+  font-weight: 500;
+  font-size: 2em;
+  color: #ffffff;
+}
+.routine-select {
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 4px solid #ffffff;
+  border-radius: 10em;
+  background-color: transparent;
+}
+.routine-delete {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 2rem;
+  height: 2rem;
+  border: 2px solid #ffffff;
+  border-radius: 10em;
+  background-color: transparent;
+  color: #ffffff;
+}
+.routine-delete:hover {
+  background-color: #ffffff;
+  color: #ff4c00;
+}
+.routine-tasks {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+  padding-left: 1.5em;
+  list-style-type: none;
+}
+.routine-tasks__item {
+  flex: 1 1 50%;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
