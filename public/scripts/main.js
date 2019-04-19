@@ -68,7 +68,7 @@ const CurrentTask = {
   template: `
   <div class="current-task">
     <span class="progress-tracker">
-      <span class="progress-tracker__text">You're on track</span>
+      <span class="progress-tracker__text trunc">You're on track</span>
     </span>
     <div class="task-info">
       <h3 class="task-info__name">Study</h3>
@@ -87,7 +87,7 @@ const CompletedTasksList = {
   <ul class="completed-today">
     <li class="completed-task" v-for="completedTask in completedToday">
       <div class="progress-indicator" :class="completedTask.progress == 0 ? 'on-time' : completedTask.progress == -1 ? 'early' : 'late'"></div>
-      <h3 class="completed-task__name">{{ completedTask.name }}</h3>
+      <h3 class="completed-task__name trunc">{{ completedTask.name }}</h3>
       <p class="completed-task__duration">
         <span class="duration" v-if="completedTask.h > 0">{{completedTask.h}}<span>h</span></span> 
         <span class="duration" v-if="completedTask.m > 0">{{completedTask.m}}<span>m</span></span>
@@ -113,26 +113,19 @@ const Badge = {
 };
 
 const RoutineCard = {
+  props: ['info'],
   template: `
-  <div class="routine-card">
+  <li class="routine-card">
     <div class="routine-control">
-      <h3 class="routine-name">Weekend Stuff</h3>
-      <button type="button" class="routine-select" :class="{selected: isSelected}" v-if="isSelectable"></button>
-      <button type="button" class="routine-delete" v-if="isDeletable"><i class="icon-delete"></i></button>
+      <h3 class="routine-name trunc">{{info.routineName}}</h3>
+      <button type="button" class="routine-select" :class="{selected: info.isSelected}" v-if="info.isSelectable"></button>
+      <button type="button" class="routine-delete" v-if="info.isDeletable"><i class="icon-delete"></i></button>
     </div>
     <ul class="routine-tasks">
-      <li v-for="task in tasks" class="routine-tasks__item">{{task}}</li>
-    </div>
-  </ul>
-  `,
-  data: function() {
-    return {
-      isSelectable: false,
-      isDeletable: true,
-      isSelected: false,
-      tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap']
-    }
-  }
+      <li v-for="task in info.tasks" class="routine-tasks__item trunc">{{task}}</li>
+    </ul>
+  </li>
+  `
 }
 
 const RoutineCarousel = {
@@ -142,14 +135,25 @@ const RoutineCarousel = {
       <h2 class="subheader">Routines <Badge count="5"></Badge></h2>
     </div>
     <ul class="routine-list">
-      <li class="routine-list__item">
-        <RoutineCard></RoutineCard>
-      </li>
-      <li class="routine-list__item">
-        <RoutineCard></RoutineCard>
-      </li> 
+      <RoutineCard v-for="routine in routines" :info="routine" :key="routine.id"></RoutineCard>
     </ul>
   </div>`,
+  data: function() {
+    return {
+      routines: [
+        {
+          id: 0,
+          routineName: 'Weekend Stuff', isSelectable: false, isDeletable: true, isSelected: false, 
+          tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap']
+        },
+        {
+          id: 1,
+          routineName: 'Weekend Stuff', isSelectable: false, isDeletable: true, isSelected: false, 
+          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower']
+        }
+      ]
+    } 
+  },
   components: {
     'Badge': Badge,
     'RoutineCard': RoutineCard
