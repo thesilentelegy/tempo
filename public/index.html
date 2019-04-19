@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="theme-color" content="#ff4c00">
+
+    <title>tempo</title>
+
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="/stylesheets/base.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/icons.css">
+  </head>
+  <body>
+    <div id="app">
+      <div class="nav-drawer">
+        <span class="brand">
+          <img src="/images/logo.png" class="brand__icon">
+          <h2 class="brand__name">tempo</h2>
+        </span>
+        <ul class="tab-list">
+          <li class="tab-list__item">
+            <router-link to="/home" class="tab-button">
+              <i class="tab-button__icon icon-home"></i>
+              <span>Home</span>
+            </router-link>
+          </li>
+          <li class="tab-list__item">
+            <router-link to="/tasks" class="tab-button">
+              <i class="tab-button__icon icon-list"></i>
+              <span>Tasks</span>
+            </router-link>
+          </li>
+          <li class="tab-list__item">
+            <router-link to="/activity" class="tab-button">
+              <i class="tab-button__icon icon-graph"></i>
+              <span>Activity</span>
+            </router-link>
+          </li>
+          <li class="tab-list__item">
+            <router-link to="/settings" class="tab-button">
+              <i class="tab-button__icon icon-cog"></i>
+              <span>Settings</span>
+            </router-link>
+          </li>            
+            
+        </ul>
+      </div>
+      <router-view class="view-panel"></router-view>
+    </div>
+  </body>
+  
+  <script src="/scripts/moment.min.js"></script>
+  <script src="/scripts/vue.js"></script>
+  <script src="/scripts/vue-router.js"></script>
+  <script src="/scripts/vuex.js"></script>
+  <script src="/scripts/main.js"></script>
+</html>

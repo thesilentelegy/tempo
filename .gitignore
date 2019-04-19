@@ -1,0 +1,11 @@
+.*
+~*
+
+node_modules/
+_test/
+
+*.sublime-project
+*.sublime-workspace
+
+!.gitignore
+!.editorconfig
