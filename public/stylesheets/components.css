@@ -7,6 +7,25 @@
   border-right: 1px solid #dedede;
 }
 
+/* BRAND */
+
+.brand {
+  display: inline-flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  width: 100%;
+}
+.brand__icon {
+  width: 40px;
+  height: 40px;
+}
+.brand__name {
+  margin: 0 0 0 0.5em;
+  font-weight: 700;
+  font-size: 1.5em;
+  color: #242424;
+}
+
 /* BADGE */
 
 .badge {
@@ -19,6 +38,9 @@
   font-size: 1rem;
   color: #ffffff;
   text-align: center;
+}
+.subheader > .badge {
+  margin: 0 0 0 0.5rem;
 }
 
 /* TAB NAV */
@@ -95,7 +117,7 @@
 /* ROUTINE CARD */
 
 .routine-card {
-  width: 22rem;
+  flex: 1 0 22em;
   background: linear-gradient(118.53deg, #EB3453 0%, #FBA919 100%);
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
   border-radius: 1rem;
@@ -148,4 +170,12 @@
   font-weight: 400;
   font-size: 1.5rem;
   color: #ffffff;
+}
+
+/* TEXT TRUNCATE */
+
+.trunc {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

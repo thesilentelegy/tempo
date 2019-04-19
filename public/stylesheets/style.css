@@ -147,14 +147,24 @@
 /* ROUTINE MANAGER PANEL */
 
 .routine-manager {
+  display: flex;
+  flex-flow: row nowrap;
   flex: 5 0 0;
   height: 100%;
   padding: 1.5em 2em;
 }
+.routine-carousel {
+  flex: 1 0 0;
+  display: flex;
+  flex-flow: column nowrap;
+}
 .routine-list {
   display: flex;
   flex-flow: row nowrap;
+  width: 100%;
   padding: 0;
+  margin: 0;
+  overflow-x: hidden;
   list-style-type: none;
 }
 .routine-list__item {
