@@ -10,6 +10,134 @@ const store = new Vuex.Store({
       taskDuration: 5700,
       recordedDuration: 4719,
       progress: (4680 - 5700) 
+    },
+    completedTasks: [
+      {
+        taskId: 't02',
+        taskName: 'Shower',
+        taskRoutine: 'r01',
+        timeCompleted: Date.now() + 10000,
+        recordedDuration: 1823,
+        progress: 0
+      },
+      {
+        taskId: 't03',
+        taskName: 'Clean room',
+        taskRoutine: 'r01',
+        timeCompleted: Date.now() + 90081,
+        recordedDuration: 1615,
+        progress: -1
+      },
+      {
+        taskId: 't04',
+        taskName: 'Play',
+        taskRoutine: 'r01',
+        timeCompleted: Date.now(),
+        recordedDuration: 4339,
+        progress: 1
+      },
+      {
+        taskId: 't05',
+        taskName: 'Nap',
+        taskRoutine: 'r01',
+        timeCompleted: Date.now() + 23723,
+        recordedDuration: 1232,
+        progress: 1
+      },
+      {
+        taskId: 't06',
+        taskName: 'Eat',
+        taskRoutine: 'r01',
+        timeCompleted: Date.now() - 87390,
+        recordedDuration: 230920,
+        progress: 0
+      },
+      {
+        taskId: 't07',
+        taskName: 'Work',
+        taskRoutine: 'r01',
+        timeCompleted: Date.now() + 123723,
+        recordedDuration: 32891,
+        progress: -1
+      }
+    ],
+    selectedRoutine: 'r01',
+    tasks: [
+      {
+        taskId: 't01',
+        taskName: 'Shower',
+        taskDuration: 1800
+      },
+      {
+        taskId: 't02',
+        taskName: 'Clean room',
+        taskDuration: 2700
+      },
+      {
+        taskId: 't03',
+        taskName: 'Play',
+        taskDuration: 3600
+      },
+      {
+        taskId: 't04',
+        taskName: 'Study',
+        taskDuration: 7200
+      },
+      {
+        taskId: 't05',
+        taskName: 'Walk',
+        taskDuration: 5400
+      },
+      {
+        taskId: 't06',
+        taskName: 'Nap',
+        taskDuration: 1200
+      }
+    ],
+    routines: [
+      {
+        routineId: 'r01',
+        routineName: 'Weekend Stuff',
+        routineTasks: [ 't01', 't02', 't03' ],
+        theme: 'sun'
+      },
+      {
+        routineId: 'r02',
+        routineName: 'Test',
+        routineTasks: [ 't01', 't04', 't05', 't06' ],
+        theme: 'frost'
+      },
+      {
+        routineId: 'r03',
+        routineName: 'Exercise',
+        routineTasks: [ 't01', 't02', 't05', 't06' ],
+        theme: 'warm'
+      },
+      {
+        routineId: 'r04',
+        routineName: 'Chill Sessions',
+        routineTasks: [ 't01', 't02', 't03', 't04' ],
+        theme: 'mint'
+      },
+      {
+        routineId: 'r05',
+        routineName: 'Daily Chores',
+        routineTasks: [ 't04', 't05', 't06' ],
+        theme: 'night'
+      },
+      {
+        routineId: 'r06',
+        routineName: 'Work',
+        routineTasks: [ 't01', 't02', 't03', 't04', 't05', 't06' ],
+        theme: 'warm'
+      }
+    ]
+  },
+  getters: {
+    getTasksById: (state) => (ids) => {
+      return state.tasks.filter((item) => {
+        return ids.includes(item.taskId);
+      });
     }
   },
   mutations: {
@@ -77,12 +205,12 @@ const CurrentTask = {
     }
   },
   computed: {
-    currentTask() {
-      let dur = store.state.currentTask.recordedDuration;
+    currentTask: function() {
+      let dur = this.$store.state.currentTask.recordedDuration;
       this.h = Math.trunc(dur / 3600);
       this.m = Math.trunc((dur - (this.h * 3600)) / 60);
       this.s = dur - ((this.h * 3600) + (this.m * 60));
-      return store.state.currentTask;
+      return this.$store.state.currentTask;
     }
   }
 };
@@ -97,13 +225,22 @@ const CompletedTask = {
   template: `
   <li class="completed-tasks-list__item">
     <div class="progress-indicator" :class="info.progress == 0 ? 'on-time' : info.progress == -1 ? 'early' : 'late'"></div>
-    <h3 class="completed-task__name trunc">{{ info.name }}</h3>
+    <h3 class="completed-task__name trunc">{{ info.taskName }}</h3>
     <p class="completed-task__duration">
-      <span class="duration" v-if="info.h > 0">{{info.h}}<span>h</span></span> 
-      <span class="duration" v-if="info.m > 0">{{info.m}}<span>m</span></span>
-      <span class="duration">{{info.s}}<span>s</span></span>
+      <span class="duration" v-if="recDur.h > 0">{{ recDur.h }}<span>h</span></span> 
+      <span class="duration" v-if="recDur.m > 0">{{ recDur.m }}<span>m</span></span>
+      <span class="duration">{{ recDur.s }}<span>s</span></span>
     </p>
-  </li>`
+  </li>`,
+  computed: {
+    recDur: function() {
+      let dur = this.info.recordedDuration;
+      let h = Math.trunc(dur / 3600);
+      let m = Math.trunc((dur - (h * 3600)) / 60);
+      let s = dur - ((h * 3600) + (m * 60));
+      return { h: h, m: m, s: s };
+    }
+  }
 };
 
 const CompletedTasksList = {
@@ -114,14 +251,9 @@ const CompletedTasksList = {
       <CompletedTask v-for="completedTask in completedTasks" :info="completedTask" :key="completedTask.id"></CompletedTask>
     </ul>
   </div>`,
-  data: function() {
-    return {
-      completedTasks: [
-        { id: 0, name: 'Shower', progress: 0, h: 0, m: 30, s: 23 },
-        { id: 1, name: 'Clean room', progress: -1, h: 0, m: 26, s: 55 },
-        { id: 2, name: 'Play', progress: 1, h: 1, m: 12, s: 19 },
-        { id: 3, name: 'Nap', progress: 0, h: 0, m: 20, s: 32}
-      ]
+  computed: {
+    completedTasks: function() {
+      return this.$store.state.completedTasks.sort((a, b) => b.timeCompleted - a.timeCompleted);
     }
   },
   components: {
@@ -136,13 +268,17 @@ const RoutineCard = {
   <li class="routine-card" :class="'grad-' + info.theme">
     <div class="routine-control">
       <h3 class="routine-name trunc">{{info.routineName}}</h3>
-      <button type="button" class="routine-select" :class="{selected: info.isSelected}" v-if="info.isSelectable"></button>
-      <button type="button" class="routine-delete" v-if="info.isDeletable"><i class="icon-delete"></i></button>
+      <button type="button" class="routine-select" :class="{selected: info.isSelected}"></button>
     </div>
     <ul class="routine-tasks">
-      <li v-for="task in info.tasks" class="routine-tasks__item trunc">{{task}}</li>
+      <li v-for="task in tasks" class="routine-tasks__item trunc">{{ task.taskName }}</li>
     </ul>
-  </li>`
+  </li>`,
+  computed: {
+    tasks: function() {
+      return this.$store.getters.getTasksById(this.info.routineTasks);
+    }
+  }
 }
 
 const RoutineCarousel = {
@@ -161,42 +297,6 @@ const RoutineCarousel = {
       </ul> 
     </div>
   </div>`,
-  data: function() {
-    return {
-      routines: [
-        {
-          id: 0,
-          routineName: 'Weekend Stuff', isSelectable: true, isDeletable: false, isSelected: true, 
-          tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap'],
-          theme: 'sun'
-        },
-        {
-          id: 1,
-          routineName: 'Exercise', isSelectable: true, isDeletable: false, isSelected: false, 
-          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
-          theme: 'frost'
-        },
-        {
-          id: 2,
-          routineName: 'Weekend Stuff', isSelectable: true, isDeletable: false, isSelected: false, 
-          tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap'],
-          theme: 'night'
-        },
-        {
-          id: 3,
-          routineName: 'Exercise', isSelectable: true, isDeletable: false, isSelected: false, 
-          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
-          theme: 'mint'
-        },
-        {
-          id: 4,
-          routineName: 'Exercise', isSelectable: true, isDeletable: false, isSelected: false, 
-          tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
-          theme: 'warm'
-        }
-      ]
-    } 
-  },
   computed: {
     carouselData: function() {
       const carouselNode = document.querySelector(".routine-list");
@@ -211,6 +311,9 @@ const RoutineCarousel = {
         carouselNode: carouselNode, cardNode: cardNode, cardWidth: cardWidth, cardStyle: cardStyle, cardMarginRight: cardMarginRight, 
         cardCount: cardCount, offset: offset, maxX: maxX
       }
+    },
+    routines: function() {
+      return this.$store.state.routines;
     }
   },
   methods: {
@@ -265,6 +368,11 @@ const CurrentTasksList = {
       ]
     }
   },
+  computed: {
+    currentTasks: function() {
+      return this.$store.getters.getTasksById(this.$store.state.selectedRoutine.routineTasks);
+    }
+  },
   components: {
     'CurrentTasksCard': CurrentTasksCard
   }
@@ -305,6 +413,9 @@ const Tasks = {
   template: `
   <div class="tasks-panel">
     <TopBar :panel-name="panelName"></TopBar>
+    <div class="content-wrapper">
+      <h2 class="feature-error">Sorry, this feature is currently not available.</h2>
+    </div>
   </div>`,
   data: function() {
     return {
@@ -320,6 +431,9 @@ const Activity = {
   template: `
   <div class="activity-panel">
     <TopBar :panel-name="panelName"></TopBar>
+    <div class="content-wrapper">
+      <h2 class="feature-error">Sorry, this feature is currently not available.</h2>
+    </div>
   </div>`,
   data: function() {
     return {
@@ -335,6 +449,9 @@ const Settings = {
   template: `
   <div class="settings-panel">
     <TopBar :panel-name="panelName"></TopBar>
+    <div class="content-wrapper">
+      <h2 class="feature-error">Sorry, this feature is currently not available.</h2>
+    </div>
   </div>`,
   data: function() {
     return {
