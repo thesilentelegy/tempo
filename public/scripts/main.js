@@ -267,7 +267,7 @@ const CurrentTasksList = {
 
 const Home = { 
   template: `
-  <div class="home-panel">
+  <div class="home-panel is-unselectable">
     <TopBar :panel-name="panelName"></TopBar>
     <div class="content-wrapper">
       <div class="today-activity">
