@@ -1,4 +1,4 @@
-![tempo logo](/public/images/logo.png)
+![tempo logo](/public/images/logo-min.png)
 
 # tempo
 ### A physical time-tracker with a webapp :computer::hourglass_flowing_sand::sparkles:
