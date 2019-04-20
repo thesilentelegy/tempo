@@ -108,7 +108,7 @@
 .completed-tasks-list {
   display: flex;
   flex-flow: column nowrap;
-  overflow-y: scroll;
+  overflow-y: auto;
   margin: 0;
   padding: 0.5rem 0 0 0;
 }
@@ -152,13 +152,14 @@
 
 .routine-manager {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: row wrap;
   flex: 5 0 0;
   height: 100%;
   padding: 1.5em 2em;
 }
 .routine-carousel {
-  flex: 1 0 0;
+  height: 50%;
+  flex: 1 0 100%;
   display: flex;
   flex-flow: column nowrap;
 }
@@ -196,4 +197,57 @@
 }
 .routine-list__item {
   margin-right: 1rem;
+}
+
+/* CURRENT TASKS */
+
+.current-tasks {
+  flex: 1 0 100%;
+}
+.current-tasks-list {
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0;
+  list-style-type: none;
+}
+.current-task-card {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1 0 40%;
+  margin: 0 1rem 0.5rem 0;
+  padding: 0.5rem 1rem;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 1rem;
+}
+.current-task-card:nth-of-type(1) {
+  background-color: #ec3a50;
+}
+.current-task-card:nth-of-type(2) {
+  background-color: #00ba6c;
+}
+.current-task-card:nth-of-type(3) {
+  background-color: #F36C37;
+}
+.current-task-card:nth-of-type(4) {
+  background-color: #272AD4;
+}
+.current-task-card:nth-of-type(5) {
+  background-color: #FAA51B;
+}
+.current-task-card:nth-of-type(6) {
+  background-color: #A61C95;
+}
+.current-task__name {
+  flex: 1 0 0;
+  margin: 0;
+  font-weight: 500;
+  font-size: 1em;
+  color: #ffffff;
+}
+.current-task__duration {
+  flex: 1 0 0;
+  margin: 0;
+  color: #ffffff;
 }

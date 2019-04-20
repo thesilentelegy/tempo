@@ -84,7 +84,7 @@ const CurrentTask = {
 
 const Badge = {
   props: ['count'],
-  template: `<span class="badge">{{ count }}</span>`
+  template: `<span class="badge" v-if="count > 0">{{ count }}</span>`
 };
 
 const CompletedTask = {
@@ -137,8 +137,7 @@ const RoutineCard = {
     <ul class="routine-tasks">
       <li v-for="task in info.tasks" class="routine-tasks__item trunc">{{task}}</li>
     </ul>
-  </li>
-  `
+  </li>`
 }
 
 const RoutineCarousel = {
@@ -162,31 +161,31 @@ const RoutineCarousel = {
       routines: [
         {
           id: 0,
-          routineName: 'Weekend Stuff', isSelectable: false, isDeletable: true, isSelected: false, 
+          routineName: 'Weekend Stuff', isSelectable: true, isDeletable: false, isSelected: true, 
           tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap'],
           theme: 'sun'
         },
         {
           id: 1,
-          routineName: 'Exercise', isSelectable: false, isDeletable: true, isSelected: false, 
+          routineName: 'Exercise', isSelectable: true, isDeletable: false, isSelected: false, 
           tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
           theme: 'frost'
         },
         {
           id: 2,
-          routineName: 'Weekend Stuff', isSelectable: false, isDeletable: true, isSelected: false, 
+          routineName: 'Weekend Stuff', isSelectable: true, isDeletable: false, isSelected: false, 
           tasks: ['Shower', 'Clean room', 'Play', 'Study', 'Walk', 'Nap'],
           theme: 'night'
         },
         {
           id: 3,
-          routineName: 'Exercise', isSelectable: false, isDeletable: true, isSelected: false, 
+          routineName: 'Exercise', isSelectable: true, isDeletable: false, isSelected: false, 
           tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
           theme: 'mint'
         },
         {
           id: 4,
-          routineName: 'Exercise', isSelectable: false, isDeletable: true, isSelected: false, 
+          routineName: 'Exercise', isSelectable: true, isDeletable: false, isSelected: false, 
           tasks: ['Sit-ups', 'Push-ups', 'Jog', 'Rest', 'Cooldown practices', 'Shower'],
           theme: 'warm'
         }
@@ -229,6 +228,43 @@ const RoutineCarousel = {
   }
 };
 
+const CurrentTasksCard = {
+  props: ['info'],
+  template: `
+  <li class="current-task-card">
+    <h3 class="current-task__name trunc">{{ info.name }}</h3>
+    <p class="current-task__duration"> 
+      <span class="duration">{{ info.m }}<span>h</span></span>
+      <span class="duration">{{ info.h }}<span>m</span></span>
+    </p>
+  </li>`
+};
+
+const CurrentTasksList = {
+  template: `
+  <div class="current-tasks">
+    <h2 class="subheader">Current tasks</h2>
+    <ul class="current-tasks-list">
+      <CurrentTasksCard v-for="currentTask in currentTasks" :info="currentTask" :key="currentTask.info"></CurrentTasksCard>
+    </ul>
+  </div>`,
+  data: function() {
+    return {
+      currentTasks: [
+        { id: 0, name: 'Shower', h: 0, m: 30 },
+        { id: 1, name: 'Clean room', h: 0, m: 45 },
+        { id: 2, name: 'Play', h: 1, m: 0 },
+        { id: 3, name: 'Study', h: 2, m: 0 },
+        { id: 4, name: 'Walk', h: 1, m: 30 },
+        { id: 5, name: 'Nap', h: 0, m: 20 }
+      ]
+    }
+  },
+  components: {
+    'CurrentTasksCard': CurrentTasksCard
+  }
+}
+
 const Home = { 
   template: `
   <div class="home-panel">
@@ -241,6 +277,7 @@ const Home = {
       </div>
       <div class="routine-manager">
         <RoutineCarousel></RoutineCarousel>
+        <CurrentTasksList></CurrentTasksList>
       </div>
     </div>
   </div>`,
@@ -254,7 +291,8 @@ const Home = {
     'CurrentTask': CurrentTask,
     'Badge': Badge,
     'CompletedTasksList': CompletedTasksList,
-    'RoutineCarousel': RoutineCarousel
+    'RoutineCarousel': RoutineCarousel,
+    'CurrentTasksList': CurrentTasksList
   }
 };
 
