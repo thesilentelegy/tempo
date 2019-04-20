@@ -18,6 +18,14 @@
   display: flex;
 }
 
+/* FEATURE ERROR */
+.feature-error {
+  margin: 1.5em 2em;
+  font-weight: 900;
+  font-size: 2em;
+  color: #a4a4a4;
+}
+
 /* TOP BAR */
 
 .top-bar {
