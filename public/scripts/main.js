@@ -234,8 +234,8 @@ const CurrentTasksCard = {
   <li class="current-task-card">
     <h3 class="current-task__name trunc">{{ info.name }}</h3>
     <p class="current-task__duration"> 
-      <span class="duration">{{ info.m }}<span>h</span></span>
-      <span class="duration">{{ info.h }}<span>m</span></span>
+      <span class="duration">{{ info.h }}<span>h</span></span>
+      <span class="duration">{{ info.m }}<span>m</span></span>
     </p>
   </li>`
 };
