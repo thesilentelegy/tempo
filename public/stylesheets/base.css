@@ -387,6 +387,7 @@ html {
 }
 *, *:before, *:after {
   box-sizing: inherit;
+  outline: none;
 }
 
 html,body,
