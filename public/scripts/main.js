@@ -1,30 +1,23 @@
-//var Vue = require('vue');
-//var VueRouter = require('vue-router');
-//var Vuex = require('vuex');
-
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
-// const store = new Vuex.Store({
-//   state: {
-//     currentTask: {
-//       taskProgress: 'ontime',
-//       taskName: 'Study',
-//       taskDuration: ,
-//     },
-//     currentRoutine: null,
-//     completedTasksToday: [],
-//     currentTasks: [],
-//     routines: [],
-//     taskHistory: [],
-//     historyLastUpdated: null
-//   },
-//   mutations: {
-//     increment (state) {
-//       state.count++
-//     }
-//   }
-// });
+const store = new Vuex.Store({
+  state: {
+    currentTask: {
+      taskId: 't01',
+      taskName: 'test',
+      taskRoutine: 'r01',
+      taskDuration: 5700,
+      recordedDuration: 4719,
+      progress: (4680 - 5700) 
+    }
+  },
+  mutations: {
+    increment (state) {
+      state.count++
+    }
+  }
+});
 
 const DateModule = {
   template: `
@@ -57,8 +50,7 @@ const TopBar = {
   <div class="top-bar">
     <h1 class="top-bar__title">{{ panelName }}</h1>
     <DateModule></DateModule>
-  </div>
-  `,
+  </div>`,
   components: {
     'DateModule': DateModule
   }
@@ -68,18 +60,31 @@ const CurrentTask = {
   template: `
   <div class="current-task">
     <span class="progress-tracker">
-      <span class="progress-tracker__text">You're on track</span>
+      <span class="progress-tracker__text">{{ currentTask.taskName <= 0 ? "You're on track" : "You're spent too long here" }}</span>
     </span>
     <div class="task-info">
-      <h3 class="task-info__name">Study</h3>
+      <h3 class="task-info__name trunc">{{ currentTask.taskName }}</h3>
       <p class="task-info__duration"> 
-        <span class="duration">01<span>h</span></span>
-        <span class="duration">52<span>m</span></span>
-        <span class="duration">36<span>s</span></span>
+        <span class="duration">{{ h }}<span>h</span></span>
+        <span class="duration">{{ m }}<span>m</span></span>
+        <span class="duration">{{ s }}<span>s</span></span>
       </p>
     </div>
-  </div>
-  `
+  </div>`,
+  data: function () {
+    return {
+      h: 0, m: 0, s: 0
+    }
+  },
+  computed: {
+    currentTask() {
+      let dur = store.state.currentTask.recordedDuration;
+      this.h = Math.trunc(dur / 3600);
+      this.m = Math.trunc((dur - (this.h * 3600)) / 60);
+      this.s = dur - ((this.h * 3600) + (this.m * 60));
+      return store.state.currentTask;
+    }
+  }
 };
 
 const Badge = {
@@ -353,5 +358,6 @@ const router = new VueRouter({
 })
 
 const app = new Vue({
+  store: store,
   router: router
 }).$mount('#app')
