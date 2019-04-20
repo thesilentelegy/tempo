@@ -158,6 +158,9 @@
   border-radius: 10em;
   background-color: transparent;
 }
+.routine-select.selected {
+  background-color: #ffffff;
+}
 .routine-delete {
   display: inline-flex;
   justify-content: center;
